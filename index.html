@@ -432,6 +432,13 @@ body {
     gap: 1.5rem;
 }
 
+.apps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
 .app-card {
     background: var(--gradient-card);
     border: 1px solid var(--border-light);
@@ -620,6 +627,7 @@ body {
     box-shadow: var(--shadow-xl);
     border: 1px solid var(--border-light);
     animation: slideUp 0.3s ease-out;
+    backdrop-filter: blur(20px);
 }
 
 .modal-header {
@@ -722,21 +730,54 @@ body {
 /* QR контейнер */
 .qr-container {
     text-align: center;
-    padding: 2rem;
+    padding: 1.5rem;
     display: flex;
     flex-direction: column;
     align-items: center;
+    background: var(--gradient-surface);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-light);
+    margin-bottom: 1rem;
 }
 
 .qr-code {
-    margin: 1.5rem auto;
-    border: 1px solid var(--border-light);
+    margin: 1rem auto;
+    border: none;
     border-radius: var(--radius-lg);
     background: white;
-    padding: 1.5rem;
+    padding: 1rem;
     display: inline-block;
-    box-shadow: var(--shadow);
+    box-shadow: var(--shadow-lg);
+    position: relative;
+    overflow: hidden;
+    max-width: 100%;
+    max-height: 400px;
 }
+
+.qr-code::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, 
+        transparent 30%, 
+        rgba(99, 102, 241, 0.1) 50%, 
+        transparent 70%);
+    pointer-events: none;
+}
+
+.qr-code img {
+    display: block;
+    border-radius: var(--radius);
+    max-width: 100%;
+    height: auto;
+    max-height: 350px;
+    width: auto !important;
+    height: auto !important;
+}
+
 
 /* Тосты */
 .toast {
@@ -805,6 +846,12 @@ body {
         grid-template-columns: 1fr;
         gap: 1rem;
     }
+
+    .apps-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    }
     
     .app-card {
         padding: 1.5rem;
@@ -837,6 +884,51 @@ body {
     .modal-header,
     .modal-body {
         padding: 1.5rem;
+    }
+    
+    /* Адаптивность для блока ссылок */
+    .link-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+        padding: 1rem;
+        min-width: 0;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    .link-url {
+        font-size: 0.7rem;
+        padding: 0.375rem;
+        margin-top: 0.375rem;
+    }
+    
+    .link-actions-wrapper {
+        width: 100%;
+        padding: 0;
+        justify-content: stretch;
+    }
+    
+    .link-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .link-actions .btn {
+        flex: 1;
+        padding: 0.75rem 0.5rem;
+        font-size: 0.75rem;
+        min-width: 0;
+        gap: 0.25rem;
+    }
+    
+    .link-actions .btn svg {
+        width: 0.875rem;
+        height: 0.875rem;
+    }
+    
+    .btn-icon-text {
+        display: none;
     }
 }
 
@@ -878,7 +970,259 @@ body {
 .h-4 { height: 1rem; }
 .w-6 { width: 1.5rem; }
 .h-6 { height: 1.5rem; }
-    </style>
+
+/* Секция ссылок для роутеров */
+.links-section {
+    margin-bottom: 2rem;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.link-item {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 1.5rem;
+    background: var(--gradient-surface);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    margin-bottom: 1rem;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    min-width: 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.link-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--gradient-primary);
+    opacity: 0;
+    transition: var(--transition);
+}
+
+.link-item:hover::before {
+    opacity: 0.05;
+}
+
+.link-item:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary-light);
+}
+
+.link-item:last-child {
+    margin-bottom: 0;
+}
+
+.link-info {
+    flex: 1;
+    position: relative;
+    z-index: 1;
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.link-name {
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--text-primary);
+    margin-bottom: 0.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.link-name::before {
+    content: '📡';
+    font-size: 1.25rem;
+}
+
+.link-description {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin-top: 0.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.link-url {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    background: var(--border-light);
+    padding: 0.5rem;
+    border-radius: var(--radius-sm);
+    margin-top: 0.5rem;
+    overflow-x: auto;
+    white-space: nowrap;
+    line-height: 1.4;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary-color) var(--border-light);
+}
+
+.link-url::-webkit-scrollbar {
+    height: 4px;
+}
+
+.link-url::-webkit-scrollbar-track {
+    background: var(--border-light);
+    border-radius: 2px;
+}
+
+.link-url::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 2px;
+}
+
+.link-url::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-hover);
+}
+
+.link-actions {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+    flex-shrink: 0;
+    margin-top: 0;
+}
+
+.btn-icon-text {
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+/* Улучшенные кнопки для ссылок */
+.link-actions .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.625rem 1rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    border-radius: var(--radius);
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    min-width: 44px;
+    justify-content: center;
+}
+
+.link-actions .btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--gradient-primary);
+    opacity: 0;
+    transition: var(--transition);
+}
+
+.link-actions .btn:hover::before {
+    opacity: 0.1;
+}
+
+.link-actions .btn:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow);
+    border-color: var(--primary-light);
+}
+
+.link-actions .btn > * {
+    position: relative;
+    z-index: 1;
+}
+
+.link-actions .btn svg {
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
+}
+
+#qrCode, #subscriptionQrCode {
+    position: relative;
+    z-index: 1;
+}
+
+#qrCode img, #subscriptionQrCode img {
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+
+/* Контейнер QR-кода внутри qr-code */
+.qr-code > div, .qr-code > img {
+    position: relative;
+    z-index: 2;
+}
+
+.qr-container p {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-top: 1rem !important;
+    margin-bottom: 0;
+}
+
+/* Улучшенные стили для кнопок в модальных окнах */
+.modal-body .step-buttons {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-light);
+}
+
+.modal-body .btn-primary {
+    min-width: 120px;
+    font-weight: 600;
+}
+
+.modal-header,
+.modal-body {
+    padding: 1.5rem;
+}
+
+/* Мобильные стили для QR */
+.qr-container {
+    padding: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.qr-code {
+    padding: 0.75rem;
+    margin: 0.75rem auto;
+    max-height: 300px;
+}
+
+.qr-code img {
+    max-height: 250px;
+} 
+
+.link-actions-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100%;
+    padding: 0.5rem 0;
+}
+</style>
 </head>
 <body>
     <div class="container">
@@ -962,9 +1306,9 @@ body {
         let panelData = null, appsConfig = null, currentLanguage = 'en', currentPlatform = 'android', toastTimeout = null;
 
         const translations = {
-            en: { settings: 'Settings', get_link: 'Get Link', theme: 'Theme', language: 'Language', light: 'Light', dark: 'Dark', auto: 'Auto', username: 'Username', status: 'Status', expires_at: 'Expires', days_left: 'Days Left', traffic_used: 'Traffic Used', traffic_limit: 'Traffic Limit', traffic_reset: 'Traffic Reset', never_expires: 'Never expires', unlimited: 'Unlimited', ACTIVE: 'Active', DISABLED: 'Disabled', LIMITED: 'Limited', EXPIRED: 'Expired', NO_RESET: 'No reset', DAY: 'Daily', WEEK: 'Weekly', MONTH: 'Monthly', subscription_links: 'Subscription Links', subscription_link: 'Subscription Link', copy: 'Copy', qr_code: 'QR Code', copied: 'Copied!', scan_with_phone: 'Scan with your phone', available_apps: 'Available Apps', other_apps: 'Other Apps', featured: 'Recommended', install_app: 'Install and Run', add_subscription: 'Add Subscription', ios: 'iOS', android: 'Android', pc: 'PC', tv: 'TV', no_data: 'No data to display', error_loading_apps: 'Error loading apps configuration', step_install: 'Install', step_add_subscription: 'Add Subscription', step_connect: 'Connect & Use', close: 'Close', or: 'or' },
-            ru: { settings: 'Настройки', get_link: 'Получить ссылку', theme: 'Тема', language: 'Язык', light: 'Светлая', dark: 'Темная', auto: 'Авто', username: 'Имя пользователя', status: 'Статус', expires_at: 'Истекает', days_left: 'Дней осталось', traffic_used: 'Трафик использован', traffic_limit: 'Лимит трафика', traffic_reset: 'Сброс трафика', never_expires: 'Бессрочно', unlimited: 'Без лимита', ACTIVE: 'Активен', DISABLED: 'Отключен', LIMITED: 'Ограничен', EXPIRED: 'Истек', NO_RESET: 'Без сброса', DAY: 'Ежедневно', WEEK: 'Еженедельно', MONTH: 'Ежемесячно', subscription_links: 'Ссылки подписки', subscription_link: 'Ссылка на подписку', copy: 'Копировать', qr_code: 'QR-код', copied: 'Скопировано!', scan_with_phone: 'Отсканируйте телефоном', available_apps: 'Доступные приложения', other_apps: 'Другие приложения', featured: 'Рекомендуется', install_app: 'Установить и запустить', add_subscription: 'Добавить подписку', ios: 'iOS', android: 'Android', pc: 'ПК', tv: 'ТВ', no_data: 'Нет данных для отображения', error_loading_apps: 'Ошибка загрузки конфигурации приложений', step_install: 'Установка', step_add_subscription: 'Добавление подписки', step_connect: 'Подключение и использование', close: 'Закрыть', or: 'или' },
-            fa: { settings: 'تنظیمات', get_link: 'دریافت لینک', theme: 'تم', language: 'زبان', light: 'روشن', dark: 'تیره', auto: 'خودکار', username: 'نام کاربری', status: 'وضعیت', expires_at: 'انقضا', days_left: 'روز باقیمانده', traffic_used: 'ترافیک استفاده شده', traffic_limit: 'محدودیت ترافیک', traffic_reset: 'بازنشانی ترافیک', never_expires: 'هرگز منقضی نمی‌شود', unlimited: 'نامحدود', ACTIVE: 'فعال', DISABLED: 'غیرفعال', LIMITED: 'محدود', EXPIRED: 'منقضی شده', NO_RESET: 'بدون بازنشانی', DAY: 'روزانه', WEEK: 'هفتگی', MONTH: 'ماهانه', subscription_links: 'لینک‌های اشتراک', subscription_link: 'لینک اشتراک', copy: 'کپی', qr_code: 'کد QR', copied: 'کپی شد!', scan_with_phone: 'با تلفن اسکن کنید', available_apps: 'اپلیکیشن‌های موجود', other_apps: 'سایر اپلیکیشن‌ها', featured: 'پیشنهادی', install_app: 'نصب و اجرا', add_subscription: 'افزودن اشتراک', ios: 'iOS', android: 'اندروید', pc: 'کامپیوتر', tv: 'تلویزیون', no_data: 'داده‌ای برای نمایش وجود ندارد', error_loading_apps: 'خطا در بارگذاری پیکربندی اپلیکیشن‌ها', step_install: 'نصب', step_add_subscription: 'افزودن اشتراک', step_connect: 'اتصال و استفاده', close: 'بستن', or: 'یا' }
+            en: { settings: 'Settings', get_link: 'Get Link', theme: 'Theme', language: 'Language', light: 'Light', dark: 'Dark', auto: 'Auto', username: 'Username', status: 'Status', expires_at: 'Expires', days_left: 'Days Left', traffic_used: 'Traffic Used', traffic_limit: 'Traffic Limit', traffic_reset: 'Traffic Reset', never_expires: 'Never expires', unlimited: 'Unlimited', ACTIVE: 'Active', DISABLED: 'Disabled', LIMITED: 'Limited', EXPIRED: 'Expired', NO_RESET: 'No reset', DAY: 'Daily', WEEK: 'Weekly', MONTH: 'Monthly', subscription_links: 'Router Links', subscription_link: 'Subscription Link', copy: 'Copy', qr_code: 'QR Code', copied: 'Copied!', scan_with_phone: 'Scan with your phone', available_apps: 'Available Apps', other_apps: 'Other Apps', featured: 'Recommended', install_app: 'Install and Run', add_subscription: 'Add Subscription', ios: 'iOS', android: 'Android', pc: 'PC', tv: 'TV', no_data: 'No data to display', error_loading_apps: 'Error loading apps configuration', step_install: 'Install', step_add_subscription: 'Add Subscription', step_connect: 'Connect & Use', close: 'Close', or: 'or', router_link_description: 'Link for router configuration' },
+            ru: { settings: 'Настройки', get_link: 'Получить ссылку', theme: 'Тема', language: 'Язык', light: 'Светлая', dark: 'Темная', auto: 'Авто', username: 'Имя пользователя', status: 'Статус', expires_at: 'Истекает', days_left: 'Дней осталось', traffic_used: 'Трафик использован', traffic_limit: 'Лимит трафика', traffic_reset: 'Сброс трафика', never_expires: 'Бессрочно', unlimited: 'Без лимита', ACTIVE: 'Активен', DISABLED: 'Отключен', LIMITED: 'Ограничен', EXPIRED: 'Истек', NO_RESET: 'Без сброса', DAY: 'Ежедневно', WEEK: 'Еженедельно', MONTH: 'Ежемесячно', subscription_links: 'Ссылки для роутеров', subscription_link: 'Ссылка на подписку', copy: 'Копировать', qr_code: 'QR-код', copied: 'Скопировано!', scan_with_phone: 'Отсканируйте телефоном', available_apps: 'Доступные приложения', other_apps: 'Другие приложения', featured: 'Рекомендуется', install_app: 'Установить и запустить', add_subscription: 'Добавить подписку', ios: 'iOS', android: 'Android', pc: 'ПК', tv: 'ТВ', no_data: 'Нет данных для отображения', error_loading_apps: 'Ошибка загрузки конфигурации приложений', step_install: 'Установка', step_add_subscription: 'Добавление подписки', step_connect: 'Подключение и использование', close: 'Закрыть', or: 'или', router_link_description: 'Ссылка для настройки роутера' },
+            fa: { settings: 'تنظیمات', get_link: 'دریافت لینک', theme: 'تم', language: 'زبان', light: 'روشن', dark: 'تیره', auto: 'خودکار', username: 'نام کاربری', status: 'وضعیت', expires_at: 'انقضا', days_left: 'روز باقیمانده', traffic_used: 'ترافیک استفاده شده', traffic_limit: 'محدودیت ترافیک', traffic_reset: 'بازنشانی ترافیک', never_expires: 'هرگز منقضی نمی‌شود', unlimited: 'نامحدود', ACTIVE: 'فعال', DISABLED: 'غیرفعال', LIMITED: 'محدود', EXPIRED: 'منقضی شده', NO_RESET: 'بدون بازنشانی', DAY: 'روزانه', WEEK: 'هفتگی', MONTH: 'ماهانه', subscription_links: 'لینک‌های روتر', subscription_link: 'لینک اشتراک', copy: 'کپی', qr_code: 'کد QR', copied: 'کپی شد!', scan_with_phone: 'با تلفن اسکن کنید', available_apps: 'اپلیکیشن‌های موجود', other_apps: 'سایر اپلیکیشن‌ها', featured: 'پیشنهادی', install_app: 'نصب و اجرا', add_subscription: 'افزودن اشتراک', ios: 'iOS', android: 'اندروید', pc: 'کامپیوتر', tv: 'تلویزیون', no_data: 'داده‌ای برای نمایش وجود ندارد', error_loading_apps: 'خطا در بارگذاری پیکربندی اپلیکیشن‌ها', step_install: 'نصب', step_add_subscription: 'افزودن اشتراک', step_connect: 'اتصال و استفاده', close: 'بستن', or: 'یا', router_link_description: 'لینک برای پیکربندی روتر' }
         };
 
         const appIcons = {
@@ -1087,8 +1431,34 @@ body {
 
         function detectOS() {
             const userAgent = navigator.userAgent;
-            if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) return 'ios';
-            if (/Android/.test(userAgent)) return 'android';
+            const platform = navigator.platform;
+            
+            // iOS устройства (iPhone, iPad, iPod)
+            if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+                return 'ios';
+            }
+            
+            // Android устройства
+            if (/Android/.test(userAgent)) {
+                return 'android';
+            }
+            
+            // macOS
+            if (/Mac|darwin/.test(platform) || /Mac OS X/.test(userAgent)) {
+                return 'pc';
+            }
+            
+            // Windows
+            if (/Win/.test(platform) || /Windows/.test(userAgent)) {
+                return 'pc';
+            }
+            
+            // Linux
+            if (/Linux/.test(platform) || /X11/.test(userAgent)) {
+                return 'pc';
+            }
+            
+            // По умолчанию PC для всех остальных
             return 'pc';
         }
 
@@ -1129,7 +1499,7 @@ body {
                 mainContent.innerHTML = `<div class="card error-card"><h3>${t('no_data')}</h3></div>`;
                 return;
             }
-            mainContent.innerHTML = renderUserInfo() + renderAppsSection(); /* + renderLinksSection() */
+            mainContent.innerHTML = renderUserInfo() + renderAppsSection() + renderLinksSection();
             updateTexts();
             attachEventListeners();
         }
@@ -1153,15 +1523,46 @@ body {
         function renderLinksSection() {
             const { links } = panelData.response;
             if (!links?.length) return '';
-            return `<div class="card links-section"><div class="card-header">${t('subscription_links')}</div><div class="card-content">${links.map(link => `<div class="link-item"><div class="link-info"><div class="link-name">${escapeHtml(extractLinkName(link))}</div></div><div class="link-actions"><button class="btn btn-sm copy-btn" data-copy-text="${escapeHtml(link)}"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg><span class="btn-icon-text">${t('copy')}</span></button><button class="btn btn-sm qr-btn" data-qr-text="${escapeHtml(link)}" data-qr-title="${escapeHtml(extractLinkName(link))}"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/></svg><span class="btn-icon-text">${t('qr_code')}</span></button></div></div>`).join('')}</div></div>`;
+            return `<div class="card links-section">
+                <div class="card-header">${t('subscription_links')}</div>
+                <div class="card-content">
+                    ${links.map(link => {
+                        return `<div class="link-item">
+                            <div class="link-info">
+                                <div class="link-name">${escapeHtml(extractLinkName(link))}</div>
+                                <div class="link-description">${t('router_link_description')}</div>
+                                <div class="link-url">${escapeHtml(link)}</div>
+                            </div>
+                            <div class="link-actions-wrapper">
+                                <div class="link-actions">
+                                    <button class="btn btn-sm copy-btn" data-copy-text="${escapeHtml(link)}">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                                        </svg>
+                                        <span class="btn-icon-text">${t('copy')}</span>
+                                    </button>
+                                    <button class="btn btn-sm qr-btn" data-qr-text="${escapeHtml(link)}" data-qr-title="${escapeHtml(extractLinkName(link))}">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"></path>
+                                        </svg>
+                                        <span class="btn-icon-text">${t('qr_code')}</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>`;
+                    }).join('')}
+                </div>
+            </div>`;
         }
 
         function renderAppsSection() {
             if (!appsConfig) return `<div class="card apps-section"><div class="card-header">${t('available_apps')}</div><div class="card-content"><p>${t('error_loading_apps')}</p></div></div>`;
             const platforms = Object.keys(appsConfig);
-            const storedPlatform = localStorage.getItem('platform');
-            currentPlatform = platforms.includes(storedPlatform) ? storedPlatform : detectOS();
+            
+            // Всегда используем автоматическое определение устройства
+            currentPlatform = detectOS();
             if (!platforms.includes(currentPlatform)) currentPlatform = platforms[0];
+            
             return `<div class="card apps-section"><div class="card-header">${t('available_apps')}</div><div class="card-content"><div class="platform-tabs">${platforms.map(p => `<div class="platform-tab ${p === currentPlatform ? 'active' : ''}" data-platform="${p}">${getAppIcon({id: p}, p)} ${t(p)}</div>`).join('')}</div><div id="appsGrid">${renderAppsForPlatform()}</div></div></div>`;
         }
 
@@ -1297,7 +1698,7 @@ body {
         function switchPlatform(platform) {
             if (!platform || platform === currentPlatform) return;
             currentPlatform = platform;
-            localStorage.setItem('platform', platform);
+            // Убираем сохранение в localStorage - пользователь может временно переключиться
 
             document.querySelectorAll('.platform-tab').forEach(tab => {
                 tab.classList.toggle('active', tab.dataset.platform === platform);
@@ -1312,14 +1713,6 @@ body {
                     const appId = e.currentTarget.dataset.appId;
                     const app = appsConfig[currentPlatform]?.find(a => a.id === appId);
                     if (app) showAppSetupModal(app);
-                });
-            });
-            appsGrid.querySelectorAll('.spoiler-header').forEach(header => {
-                header.addEventListener('click', (e) => {
-                    const content = e.currentTarget.nextElementSibling;
-                    const arrow = e.currentTarget.querySelector('.spoiler-arrow');
-                    content.classList.toggle('open');
-                    arrow.classList.toggle('open');
                 });
             });
         }
@@ -1342,10 +1735,10 @@ body {
                 const qr = qrcode(0, 'M');
                 qr.addData(data);
                 qr.make();
-                qrContainer.innerHTML = qr.createImgTag(5, 10);
+                qrContainer.innerHTML = `<div class="qr-code">${qr.createImgTag(5, 10)}</div>`;
             } catch (e) {
                 console.error('QR generation failed:', e);
-                qrContainer.textContent = 'Error generating QR code.';
+                qrContainer.innerHTML = `<div class="qr-code">Error generating QR code.</div>`;
             }
             openModal('qrModal');
         }
@@ -1360,10 +1753,10 @@ body {
                 const qr = qrcode(0, 'M');
                 qr.addData(url);
                 qr.make();
-                qrContainer.innerHTML = qr.createImgTag(5, 10);
+                qrContainer.innerHTML = `<div class="qr-code">${qr.createImgTag(5, 10)}</div>`;
             } catch (e) {
                 console.error('QR generation failed:', e);
-                qrContainer.textContent = 'Error generating QR code.';
+                qrContainer.innerHTML = `<div class="qr-code">Error generating QR code.</div>`;
             }
             openModal('subscriptionModal');
         }
@@ -1404,6 +1797,11 @@ body {
                 if (i !== -1) try { return decodeURIComponent(link.substring(i + 1)); } catch {}
             }
             return 'Server Link';
+        }
+
+        function extractLinkDescription(link) {
+            try { return decodeURIComponent(new URL(link).searchParams.get('description')); }
+            catch { return ''; }
         }
 
         function formatDate(d) { return new Date(d).toLocaleDateString(currentLanguage === 'ru' ? 'ru-RU' : currentLanguage === 'fa' ? 'fa-IR' : 'en-GB'); }

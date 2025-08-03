@@ -20,7 +20,7 @@
 *   **Многоязычная поддержка:** Страница доступна на **русском, английском и фарси**. Язык определяется автоматически на основе настроек браузера пользователя, с возможностью ручного переключения.
 
 *   **Интеграция с Telegram Mini App:** Возможность использовать страницу подписки как Telegram Mini App в вашем боте.
-    *   **Переадресация/Redirect-страница:** Возможность использовать собственную или внешнюю страницу переадресации (актуально для Telegram Mini App, например в стиле Orion — [демо](https://legiz-ru.github.io/Orion/redirect-page/?redirect_to=), self-host по [Orion redirect-page](https://github.com/legiz-ru/Orion/blob/main/docs/redirect-page/index.html)).
+    *   **Переадресация/Redirect-страница:** Возможность использовать собственную или внешнюю страницу переадресации (актуально для Telegram Mini App, например в стиле Orion — [демо]([https://justyay.github.io/redirect-page/?redirect_to=](https://justyay.github.io/redirect-page/?redirect_to=)), self-host по [Orion redirect-page](https://github.com/legiz-ru/Orion/blob/main/docs/redirect-page/index.html)).
 
 ## Скриншоты
 
@@ -46,7 +46,7 @@
     Скачайте файл `index.html` в ту же папку, где находится ваш `docker-compose.yml`, используя `curl`:
 
     ```bash
-    curl -o index.html https://raw.githubusercontent.com/legiz-ru/Orion/main/index.html
+    curl -o index.html https://raw.githubusercontent.com/JustYay/Orion/main/index.html
     ```
 
 2.  **Настройка Docker Compose:**
@@ -76,7 +76,7 @@
 3.  **(Опционально) Настройка redirect-страницы для переадресации**  
     Для интеграции с Telegram Mini App или для кастомной логики переадресации укажите свою redirect-страницу в index.html:
     ```js
-    const redirect_link = 'https://legiz-ru.github.io/Orion/redirect-page/?redirect_to=';
+    const redirect_link = 'https://justyay.github.io/redirect-page/?redirect_to=';
     ```
     или используйте свой self-hosted вариант. Например: [Orion redirect-page](https://github.com/legiz-ru/Orion/blob/main/docs/redirect-page/index.html) или [redirect-page от maposia](https://github.com/maposia/redirect-page/).
 
@@ -97,3 +97,5 @@
 
 *   [Tribute on Telegram](https://t.me/tribute/app?startapp=drzu)
 *   TON USDT: `UQAGQTQZYCx5TWj5cmTLpo7164PFsXqZZJ6t6x88n7sHW9gU`
+
+*   modification by JustYay
